@@ -11,6 +11,13 @@ Coming soon...
 
 ## How to compile
 
-Coming soon...
+```shell
+# Compile the code and move the executable into /bin
+make install
+
+# Compile the code and move the executable into ./bin
+make test
+
+```
 
 <br />
