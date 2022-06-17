@@ -13,6 +13,7 @@ C_FILES = $(wildcard $(NUMBER)/*.c)
 O_FILES = $(C_FILES:.c=.o)
 B_FILES = $(addprefix $(BUILD)/, $(notdir $(O_FILES)))
 EXE = $(BIN)/conv
+INS_EXE = /bin/conv
 
 # Compile
 all: create_dir $(O_FILES) $(EXE)
@@ -69,4 +70,8 @@ test:
 	@ clear
 	@ make cleanall
 	@ make
-	
+
+install: 
+	make
+	mv $(EXE) $(INS_EXE)	
+
