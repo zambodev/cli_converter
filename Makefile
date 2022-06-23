@@ -1,15 +1,15 @@
 # Compiler serttings
 CC = clang
-CFLAGS = -Wall -g -lm
+CFLAGS = -Wall -g
+LFLAGS = -lm
 
 # Folders
 SRC = src
-NUMBER = $(SRC)/number
 BUILD = build
 BIN = bin
 
 # Files
-C_FILES = $(wildcard $(NUMBER)/*.c)
+C_FILES = $(wildcard $(SRC)/*.c)
 O_FILES = $(C_FILES:.c=.o)
 B_FILES = $(addprefix $(BUILD)/, $(notdir $(O_FILES)))
 EXE = $(BIN)/conv
@@ -24,9 +24,9 @@ all: create_dir $(O_FILES) $(EXE)
 	@ $(CC) -c $^ -o $(BUILD)/$(notdir $@) $(CFLAGS)
 	@echo done
 
-$(EXE) : $(SRC)/main.c
+$(EXE) : $(B_FILES)
 	@echo -n 'Linking: $(O_FILES) $^ -> $@ -- '
-	@ $(CC) $^ $(B_FILES) -o $@ $(CFLAGS)
+	@ $(CC) $^ -o $@ $(CFLAGS) $(LFLAGS)
 	@echo done
 
 # Create directories
