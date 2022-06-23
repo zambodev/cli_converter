@@ -4,20 +4,28 @@ Command line interface number converter with many functionalities and cool featu
 
 <br />
 
-## Features
-Coming soon...
-
-<br />
-
-## How to compile
+## How to install
 
 ```shell
+# Compile the code and move the executable into ./bin
+make
+
 # Compile the code and move the executable into /bin
 make install
 
-# Compile the code and move the executable into ./bin
+# Clear all folders, ompile the code and move the executable into ./bin
 make test
 
 ```
 
 <br />
+
+## Help page
+```shell
+Default:					<number> <base> <new_base> 
+-h --help:					Show this help page
+-l --last:					Print last conversion 
+```
+<br />
+
+**NOTE**: The conversion history file, conv_history.bin, is stored into /tmp 
