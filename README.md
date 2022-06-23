@@ -28,8 +28,4 @@ Default:					<number> <base> <new_base>
 ```
 <br />
 
-<<<<<<< HEAD
 **NOTE**: The conversion history file, conv_history.bin, is stored into /tmp 
-=======
-### **NOTE**: The conversion history file, conv_history.bin, is stored into /tmp 
->>>>>>> f0bf83855cddc8d4514208a589edb7a0e90f5679
