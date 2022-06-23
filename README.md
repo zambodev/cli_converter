@@ -1,3 +1,5 @@
+![GitHub](https://img.shields.io/github/license/Zambo-dev/cli_converter)
+
 # Number converter
 
 Command line interface number converter with many functionalities and cool features
