@@ -1,9 +1,9 @@
 #ifndef NUM_H
 #define NUM_H
 
-#define STR_LEN 120
-
 #include <stdint.h>
+
+#define STR_LEN 120
 
 
 typedef struct NUM_T
