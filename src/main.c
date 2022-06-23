@@ -7,10 +7,26 @@
 
 int main(int argc, char **argv)
 {	
-	if(argc < 4) 
+	if(argc == 1) 
 	{
-		puts("ERROR: Missing parameters <number> <base> <new_base>");
+		puts("ERROR: Missing parameters, use -h for help");
 		return EXIT_FAILURE;	
+	}
+
+	/* Args parser */
+	if(argv[1][1] == 'h' || argv[1][2] == 'h')
+	{
+		printf("%s%*s%s\n%s%*s%s\n",
+		"Default:", 32-8, " ", "<number> <base> <new_base>",
+		"-h --help:", 32-10, " ", "Show this help page"
+		);
+
+		return EXIT_SUCCESS;
+	}
+	else
+	{
+		puts("ERROR: Wrong parameters, use -h for help");
+		return EXIT_FAILURE;
 	}
 
 	num_t num = {0, 0, 0};
