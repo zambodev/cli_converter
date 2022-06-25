@@ -28,7 +28,7 @@ int main(int argc, char **argv)
 		printf("%s%*s%s\n%s%*s%s\n%s%*s%s\n",
 		"Default:", 32-8, " ", "<number> <base> <new_base>",
 		"-h --help:", 32-10, " ", "Show this help page",
-		"-l --last:", 32-10, " ", "Print last conversion"
+		"-l <n> --last <n>:", 32-18, " ", "Print last conversion"
 		);
 
 		return EXIT_SUCCESS;
