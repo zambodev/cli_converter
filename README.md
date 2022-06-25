@@ -26,7 +26,7 @@ make test
 ```shell
 Default:					<number> <base> <new_base> 
 -h --help:					Show this help page
--l <n> --last <n>:				Print last--n conversionn 
+-l <n> --last <n>:				Print last-n conversionn 
 ```
 <br />
 
