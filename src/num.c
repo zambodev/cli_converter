@@ -3,58 +3,11 @@
 #include <string.h>
 #include <math.h>
 
+#include "util.h"
 #include "num.h"
 
 
 static const char alphabet[] = {'0', '1', '2', '3' ,'4' ,'5' ,'6' ,'7' ,'8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
-
-/* Get number length with delimiter*/
-static uint64_t strlen_d(const char *number_str, char delimiter)
-{
-	uint64_t length = 0;
-
-	/* Skip the sign if present */
-	const char *number_str_iter = (*number_str == '-' || *number_str == '+') ? number_str+1 : number_str;
-
-	/* Get whole max idx */
-	while(*number_str_iter != delimiter && *number_str_iter != '\0')
-	{	
-		++length;
-		++number_str_iter;
-	}
-
-	return length;
-}
-
-/* Convert chars into respective decimal number */
-static int8_t alpha_to_dec(char c)
-{
-	if(c >= '0' && c <= '9')
-		return c - '0';
-	else if(c >= 'A' && c <= 'Z')
-		return c - 55;
-	else if(c >= 'a' && c <= 'z')
-		return c - 87;
-	else
-		return -1;
-}
-
-/* Convert a string into uin8_t value */
-static int8_t str_to_uint8(const char *str, uint8_t *num)
-{
-	const char *iter = str;
-	int8_t retval = 0;
-	uint8_t exp = strlen(str);
-
-	while(*iter != '\0')
-	{
-		if((retval = alpha_to_dec(*iter)) == -1) return -1;
-		*num += retval * pow(10, --exp);
-		++iter;	
-	}
-
-	return 0;
-}
 
 /* Initialize number converting it to base 10 */
 int8_t num_init(num_t *number, const char *in_str, const char *base_str)

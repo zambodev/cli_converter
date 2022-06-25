@@ -16,7 +16,7 @@ typedef struct HIST_T
 } hist_t;
 
 
-int8_t hist_read(hist_t *hist_out);
+int8_t hist_read(hist_t *hist_out, char *val_str);
 int8_t hist_write(hist_t *hist_in);
 void hist_print(hist_t *hist);
 

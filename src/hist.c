@@ -1,15 +1,23 @@
 #include "hist.h"
+#include "util.h"
 
 #define FILENAME "/tmp/conv_history.bin"
 
 
-int8_t hist_read(hist_t *hist_out)
+int8_t hist_read(hist_t *hist_out, char *val_str)
 {
+	uint8_t val = 0;
 	FILE *log;
-	if((log = fopen(FILENAME, "rb")) == NULL) return -1;
 
-	if(fseek(log, -sizeof(hist_t), SEEK_END) != 0) return -1;
+	if((log = fopen(FILENAME, "rb")) == NULL) return -1;
+	if(val_str != NULL && str_to_uint8(val_str, &val) == -1)
+		return -1;
+	else
+		++val;
+	
+	if(fseek(log, -sizeof(hist_t) * val, SEEK_END) != 0) return -1;
 	fread(hist_out, sizeof(hist_t), 1, log);
+	
 	if(ferror(log) != 0)
 	{
 		clearerr(log);

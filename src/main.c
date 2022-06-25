@@ -34,12 +34,19 @@ int main(int argc, char **argv)
 		return EXIT_SUCCESS;
 	}
 	if(argv[1][1] == 'l' || argv[1][2] == 'l')
-	{
-		if(hist_read(&hist) == -1)
+	{	
+		int8_t retval;
+		if(argc < 3)
+			retval = hist_read(&hist, NULL);
+		else
+			retval = hist_read(&hist, argv[2]);
+		
+		if(retval == -1)
 		{
 			printf("ERROR: Log reading failed!\n");
 			return EXIT_FAILURE;
 		}
+
 		hist_print(&hist);
 
 		return EXIT_SUCCESS;
