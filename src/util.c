@@ -3,6 +3,20 @@
 #include "util.h"
 
 
+int8_t str_check(const char *number_str, uint8_t base)
+{
+	/* Skip the sign if present */
+	const char *str_ptr = (*number_str == '-' || *number_str == '+') ? number_str+1 : number_str;
+
+	while(*str_ptr != '\0')
+	{
+		if(alpha_to_dec(*str_ptr) >= base) return -1;
+		++str_ptr;
+	}
+	
+	return 0;
+}
+
 /* Get number length with delimiter*/
 uint64_t strlen_d(const char *number_str, char delimiter)
 {

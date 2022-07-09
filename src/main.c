@@ -21,9 +21,8 @@ int main(int argc, char **argv)
 		puts("ERROR: Missing parameters, use -h for help");
 		return EXIT_FAILURE;	
 	}
-
 	/* Args parser */
-	if(argv[1][1] == 'h' || argv[1][2] == 'h')
+	else if(argv[1][1] == 'h' || argv[1][2] == 'h')
 	{
 		printf("%s%*s%s\n%s%*s%s\n%s%*s%s\n",
 		"Default:", 32-8, " ", "<number> <base> <new_base>",
@@ -33,7 +32,7 @@ int main(int argc, char **argv)
 
 		return EXIT_SUCCESS;
 	}
-	if(argv[1][1] == 'l' || argv[1][2] == 'l')
+	else if(argv[1][1] == 'l' || argv[1][2] == 'l')
 	{	
 		int8_t retval;
 		if(argc < 3)
@@ -51,14 +50,27 @@ int main(int argc, char **argv)
 
 		return EXIT_SUCCESS;
 	}
+	else if(argc < 4)
+	{
+		puts("ERROR: Missing parameters! <number> <base> <new_base>");
+		return EXIT_FAILURE;
+	}
 
 
 	/* Initialize num_t */
-	num_init(&num, argv[1], argv[2]);
+	if(num_init(&num, argv[1], argv[2]) == -1)
+	{
+		puts("ERROR: Number initialization failed!");
+		return EXIT_FAILURE;
+	}
 
 	/* Convert num_t to str with new base */
-	num_to_str(&num, output, argv[3]);
-	
+	if(num_to_str(&num, output, argv[3]) == -1)
+	{
+		puts("ERROR: Number conversion failed!");
+		return EXIT_FAILURE;
+	}
+
 	/* Print out new number */
 	printf("%s\n", output);
 	
@@ -67,11 +79,19 @@ int main(int argc, char **argv)
 	strcpy(hist.new_base, argv[3]);
 	strcpy(hist.result, output);
 	/* Convert num_t to str with original base */
-	num_to_str(&num, output, argv[2]);
+	if(num_to_str(&num, output, argv[2]) == -1)
+	{
+		puts("ERROR: Conversion to base 10 failed!");
+		return EXIT_FAILURE;
+	}
 	strcpy(hist.number, output);
 
 	/* Store hist_t in file */
-	hist_write(&hist);
+	if(hist_write(&hist) == -1)
+	{
+		puts("ERROR: Writing history file failed!");
+		return EXIT_FAILURE;
+	}
 
 	return EXIT_SUCCESS;
 }

@@ -7,6 +7,7 @@
 uint64_t strlen_d(const char *number_str, char delimiter);
 int8_t alpha_to_dec(char c);
 int8_t str_to_uint8(const char *str, uint8_t *num);
+int8_t str_check(const char *number_str, uint8_t base);
 
 
 #endif

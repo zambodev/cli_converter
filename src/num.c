@@ -18,7 +18,10 @@ int8_t num_init(num_t *number, const char *in_str, const char *base_str)
 	if(str_to_uint8(base_str, &base) == -1) return -1;
 	/* Check base value */
 	if(base < 2 || base > 36) return -1;
-
+	
+	/* Check String correctness */
+	if(str_check(in_str, base) == -1) return -1;
+	
 	/* Sign value */
 	number->base |= (*in_str == '-') ? 128 : 0;
 	/* Set the point at the first number position */
