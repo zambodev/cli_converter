@@ -12,11 +12,12 @@ Command line interface number converter with many functionalities and cool featu
 # Compile the code and move the executable into ./bin
 make
 
+# Clear all folders, ompile the code and move the executable into ./bin
+make test
+
 # Compile the code and move the executable into /bin
 make install
 
-# Clear all folders, ompile the code and move the executable into ./bin
-make test
 
 ```
 
@@ -24,9 +25,10 @@ make test
 
 ## Help page
 ```shell
-Default:					<number> <base> <new_base> 
--h --help:					Show this help page
--l <n> --last <n>:				Print last-n conversionn 
+Default:                        <number> <base> <new_base>
+-h --help:                      Show this help page
+-l <n> --last <n>:              Print last-n conversion
+-r <n> --redo <n>:              Remake last conversion with new <n> base
 ```
 <br />
 
