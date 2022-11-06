@@ -12,7 +12,7 @@ Command line interface number converter with many functionalities and cool featu
 # Compile the code and move the executable into ./bin
 make
 
-# Clear all folders, ompile the code and move the executable into ./bin
+# Clear all folders, compile the code and move the executable into ./bin
 make test
 
 # Compile the code and move the executable into /bin
