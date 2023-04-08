@@ -1,5 +1,5 @@
 # Compiler serttings
-CC = clang
+CC = cc
 CFLAGS = -Wall -g
 LFLAGS = -lm
 
