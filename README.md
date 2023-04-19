@@ -30,9 +30,9 @@ conv <number> <base> <new_base>
 
 Options:
 ```shell
--h --help						    Show help page
--l <n> --last <n>				Print last-n conversion
--r <n> --redo <n>				Remake last conversion with new <n> base
+-h --help                       Show help page
+-l <n> --last <n>               Print last-n conversion
+-r <n> --redo <n>               Remake last conversion with new <n> base
 ```
 
 <br />
