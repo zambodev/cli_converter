@@ -23,13 +23,18 @@ make install
 
 <br />
 
-## Help page
+## How to use
 ```shell
-Default:                        <number> <base> <new_base>
--h --help:                      Show this help page
--l <n> --last <n>:              Print last-n conversion
--r <n> --redo <n>:              Remake last conversion with new <n> base
+conv <number> <base> <new_base>
 ```
+
+Options:
+```shell
+-h --help						Show help page
+-l <n> --last <n>				Print last-n conversion
+-r <n> --redo <n>				Remake last conversion with new <n> base
+```
+
 <br />
 
 **NOTE**: The conversion history file, conv_history.bin, is stored into /tmp 
