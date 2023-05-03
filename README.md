@@ -9,14 +9,14 @@ Command line interface number converter with many functionalities and cool featu
 ## How to install
 
 ```shell
-# Compile the code and move the executable into ./bin
+# Compile the code
 make
 
 # Clear all folders, compile the code and move the executable into ./bin
 make test
 
 # Compile the code and move the executable into /bin
-make install
+sudo make install
 
 
 ```
