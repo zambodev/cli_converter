@@ -1,22 +1,77 @@
 	section		.text
-	global		strcheck, strnorm, lpow, strlend
+	global		strcheck, strnorm, lpow, strlend, strtodec
+
+; rdi = normalized string
+; rsi = base
+; rax = result
+strtodec:
+	; rcx = exponent
+	push	rdi
+	push	rsi
+	call	strlend
+	mov	rcx, rax
+	dec	rcx
+	pop	rsi
+	pop	rdi
+
+	xor	rax, rax
+.loop:	cmp 	byte [rdi], 0
+	je	.exit
+	cmp 	byte [rdi], '.'
+	je	.exit
+	cmp 	byte [rdi], ','
+	je	.exit
+
+	; r8 = pow(base, exp)
+	push	rax
+	push	rdi
+	push	rsi
+	mov	rdi, rsi
+	mov 	rsi, rcx
+	call	lpow
+	mov	r8, rax
+	dec 	rcx
+	pop	rsi
+	pop	rdi
+	pop	rax
+
+	; r8 = num * r8
+	push	rax
+	xor	rax, rax
+	mov	al, byte [rdi]
+	mul	r8
+	mov 	r8, rax
+	pop	rax
+
+	; res = res + r8
+	add 	rax, r8
+
+	inc	rdi
+	jmp	.loop
+
+.exit:	ret
 
 ; rdi = str
-; rsi = delim
+; rax = result
 strlend:
 	xor	rax, rax
-.loop:	cmp	byte [rdi], sil
+.loop:	cmp 	byte [rdi], 0
+	je	.exit
+	cmp 	byte [rdi], '.'
+	je	.exit
+	cmp 	byte [rdi], ','
 	je	.exit
 
 	inc 	rax
-	inc 	rdi
 
+	inc 	rdi
 	jmp	.loop
 
 .exit:	ret
 
 ; rdi = num
 ; rsi = exp
+; rax = result
 lpow:
 	cmp 	rsi, 0
 	jg	.start
@@ -36,11 +91,16 @@ lpow:
 .exit:	ret
 
 ; Set all char a 0 - 25 value
-; rax = result
 ; rdi = val
+; rax = result
 strnorm:
 .loop:	cmp	byte [rdi], 0
 	je	.exit
+	cmp	byte [rdi], '.'
+	je	.nxt
+	cmp	byte [rdi], ','
+	je	.nxt
+
 	cmp	byte [rdi], 57
 	jle	.c48
 	cmp	byte [rdi], 90
@@ -62,7 +122,7 @@ strnorm:
 
 .sub:	sub	byte [rdi], al
 
-	inc 	rdi
+.nxt:	inc 	rdi
 	jmp	.loop
 
 .err:	mov	rax, -1
@@ -76,12 +136,15 @@ strcheck:
 	xor	rax, rax
 .loop:	cmp	byte [rdi], 0
 	je	.exit
-	
+	cmp	byte [rdi], '.'
+	je	.nxt
+	cmp	byte [rdi], ','
+	je	.nxt
+
 	cmp	byte [rdi], sil
 	jge	.err
 
-	inc	rdi
+.nxt:	inc	rdi
 	jmp	.loop
-
 .err:	sub	rax, 1
 .exit:	ret
