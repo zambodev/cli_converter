@@ -1,5 +1,19 @@
 	section		.text
-	global		strcheck, strnorm, lpow
+	global		strcheck, strnorm, lpow, strlend
+
+; rdi = str
+; rsi = delim
+strlend:
+	xor	rax, rax
+.loop:	cmp	byte [rdi], sil
+	je	.exit
+
+	inc 	rax
+	inc 	rdi
+
+	jmp	.loop
+
+.exit:	ret
 
 ; rdi = num
 ; rsi = exp
@@ -10,16 +24,16 @@ lpow:
 	mov 	rax, 1
 	jmp	.exit
 
-.start	mov 	rax, rdi
+.start:	mov 	rax, rdi
 	dec	rsi
-.loop	cmp	rsi, 0
+.loop:	cmp	rsi, 0
 	je	.exit
 
 	mul	rdi
 	dec	rsi
 	jmp	.loop
 
-.exit	ret
+.exit:	ret
 
 ; Set all char a 0 - 25 value
 ; rax = result
@@ -33,6 +47,8 @@ strnorm:
 	jle 	.c65
 	cmp	byte [rdi], 122
 	jle	.c97
+	jmp	.err
+
 .c48:	cmp	byte [rdi], 48
 	mov	rax, 48
 	jge	.sub
@@ -43,6 +59,7 @@ strnorm:
 	mov	rax, 87
 	jge	.sub
 	jmp	.err
+
 .sub:	sub	byte [rdi], al
 
 	inc 	rdi
@@ -53,7 +70,7 @@ strnorm:
 .exit:	ret
 
 ; rax = result
-; rdi = val
+; rdi = str
 ; rsi = base
 strcheck:
 	xor	rax, rax
