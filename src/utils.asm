@@ -1,6 +1,27 @@
 	section		.text
-	global		strcheck, strnorm
+	global		strcheck, strnorm, lpow
 
+; rdi = num
+; rsi = exp
+lpow:
+	cmp 	rsi, 0
+	jg	.start
+
+	mov 	rax, 1
+	jmp	.exit
+
+.start	mov 	rax, rdi
+	dec	rsi
+.loop	cmp	rsi, 0
+	je	.exit
+
+	mul	rdi
+	dec	rsi
+	jmp	.loop
+
+.exit	ret
+
+; Set all char a 0 - 25 value
 ; rax = result
 ; rdi = val
 strnorm:
