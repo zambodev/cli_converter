@@ -4,3 +4,6 @@ build/
 
 *.txt
 *.bin
+*.o
+
+main.c
