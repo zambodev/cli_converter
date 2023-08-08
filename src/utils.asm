@@ -1,10 +1,10 @@
 	section		.text
-	global		strcheck, strnorm, lpow, strlend, strtodec
+	global		strcheck, strnorm, lpow, strlend, strwtodec, strdtodec, retval
 
 ; rdi = normalized string
 ; rsi = base
 ; rax = result
-strtodec:
+strwtodec:
 	; rcx = exponent
 	push	rdi
 	push	rsi
@@ -50,6 +50,59 @@ strtodec:
 	jmp	.loop
 
 .exit:	ret
+
+; rdi = normalized string
+; rsi = base
+; rax = result
+strdtodec:
+	sub 	rsp, 16
+	; rcx = exponent
+	mov 	rcx, 1
+
+	xorpd	xmm0, xmm0
+.loop:	cmp 	byte [rdi], 0
+	je	.exit
+	cmp 	byte [rdi], '.'
+	je	.exit
+	cmp 	byte [rdi], ','
+	je	.exit
+
+	; xmm1 = pow(base, exp)
+	xorpd 	xmm1, xmm1
+	push	rdi
+	push	rsi
+	mov	rdi, rsi
+	mov 	rsi, rcx
+	call	lpow
+	push	rax
+	addsd	xmm1, [rsp]
+	pop	rax
+	inc 	rcx
+	pop	rsi
+	pop	rdi
+
+	; xmm1 = num / xmm1
+	movdqu	oword [rsp], xmm0
+	push	rdx
+	xor	rdx, rdx
+	xorpd	xmm0, xmm0
+	mov	dl, byte [rdi]
+	push	rdx
+	addsd	xmm0, [rsp]
+	pop	rdx
+	divsd	xmm0, xmm1
+	movaps xmm1, xmm0
+	pop	rdx
+	movdqu	xmm0, oword [rsp]
+
+	; res = res + xmm1
+	addsd 	xmm0, xmm1
+
+	inc	rdi
+	jmp	.loop
+
+.exit:	add	rsp, 16
+	ret
 
 ; rdi = str
 ; rax = result
