@@ -1,5 +1,5 @@
 	section		.text
-	global		strcheck, strnorm, lpow, strlend, strwtodec, strdtodec, retval, decwtobase, decdtobase
+	global		strcheck, strnorm, lpow, strlend, strwtodec, strdtodec, retval
 
 ; rdi = normalized string
 ; rsi = base
@@ -51,33 +51,6 @@ strwtodec:
 
 .exit:	ret
 
-; rdi = whole number
-; rsi = new base
-; rdx = result str
-; rcx = alphabet
-decwtobase:
-	add	rdx, 63
-.loop:	cmp 	rdi, 0
-	je	.exit
-
-	; result[] = whole % base
-	mov 	rax, rdi
-	push	rdx
-	xor	rdx, rdx
-	div 	qword [rsi]
-	mov	rdi, rax
-	mov	rax, rcx
-	add	rax, rdx
-	pop	rdx
-	xor	r8, r8
-	mov	r8b, byte [rax]
-	mov	byte [rdx], r8b
-	dec	rdx
-
-	jmp	.loop
-
-.exit:	ret
-
 ; rdi = normalized string
 ; rsi = base
 ; rax = result
@@ -118,7 +91,7 @@ strdtodec:
 	addsd	xmm0, [rsp]
 	pop	rdx
 	divsd	xmm0, xmm1
-	movaps	xmm1, xmm0
+	movaps xmm1, xmm0
 	pop	rdx
 	movdqu	xmm0, oword [rsp]
 
@@ -130,37 +103,6 @@ strdtodec:
 
 .exit:	add	rsp, 16
 	ret
-
-; rdi = decimal number
-; rsi = new base
-; rdx = result str
-; rcx = alphabet
-decdtobase:
-	xorpd	xmm0, xmm0
-	xorpd	xmm1, xmm1
-	xorpd 	xmm2, xmm2
-	movsd 	xmm0, qword [rdi]
-	cvtsi2sd 	xmm1, qword [rsi]
-
-.loop	comisd 	xmm0, xmm2
-	je	.exit
-
-	mulsd 	xmm0, xmm1
-	xor	rax, rax
-	cvttsd2si 	rax, xmm0
-	push	rax
-	add	rax, rcx
-	xor	r8, r8
-	mov	r8b, byte [rax]
-	mov	byte [rdx], r8b
-	cvtsi2sd	xmm3, qword [rsp]
-	subsd	xmm0, xmm3
-	pop	rax
-	inc	rdx
-
-	jmp	.loop
-
-.exit:	ret
 
 ; rdi = str
 ; rax = result
