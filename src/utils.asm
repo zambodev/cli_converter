@@ -56,7 +56,7 @@ strwtodec:
 ; rdx = result str
 ; rcx = alphabet
 decwtobase:
-
+	add	rdx, 63
 .loop:	cmp 	rdi, 0
 	je	.exit
 
@@ -72,7 +72,7 @@ decwtobase:
 	xor	r8, r8
 	mov	r8b, byte [rax]
 	mov	byte [rdx], r8b
-	inc	rdx
+	dec	rdx
 
 	jmp	.loop
 
