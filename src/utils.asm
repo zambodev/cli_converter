@@ -138,25 +138,24 @@ strdtodec:
 decdtobase:
 	xorpd	xmm0, xmm0
 	xorpd	xmm1, xmm1
-	xorpd	xmm2, xmm2
-	push	rdi
-	movsd 	xmm0, [rsp]
-	pop	rdi
-	push	rsi
-	vmovsd 	xmm1, [rsp]
-	pop	rsi
+	xorpd 	xmm2, xmm2
+	movsd 	xmm0, qword [rdi]
+	movsd 	xmm1, qword [rsi]
 
-.loop:	comisd 	xmm0, xmm2
+.loop	comisd 	xmm0, xmm2
 	je	.exit
 
-	; result[] = dec * base
-	mulsd	xmm0, xmm1
-	cvtps2dq xmm3, xmm0
-	movq 	rax, xmm0
+	mulsd 	xmm0, xmm1
+	xor	rax, rax
+	cvttsd2si 	rax, xmm0
+	push	rax
 	add	rax, rcx
 	xor	r8, r8
 	mov	r8b, byte [rax]
 	mov	byte [rdx], r8b
+	cvtsi2sd	xmm3, qword [rsp]
+	subsd	xmm0, xmm3
+	pop	rax
 	inc	rdx
 
 	jmp	.loop
