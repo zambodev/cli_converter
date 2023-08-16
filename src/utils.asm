@@ -64,7 +64,7 @@ decwtobase:
 	mov 	rax, rdi
 	push	rdx
 	xor	rdx, rdx
-	div 	rsi
+	div 	qword [rsi]
 	mov	rdi, rax
 	mov	rax, rcx
 	add	rax, rdx
@@ -140,7 +140,7 @@ decdtobase:
 	xorpd	xmm1, xmm1
 	xorpd 	xmm2, xmm2
 	movsd 	xmm0, qword [rdi]
-	movsd 	xmm1, qword [rsi]
+	cvtsi2sd 	xmm1, qword [rsi]
 
 .loop	comisd 	xmm0, xmm2
 	je	.exit
