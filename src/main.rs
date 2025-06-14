@@ -3,16 +3,32 @@ mod parser;
 
 
 fn main() {
+    const HELP_MSG: &str = "Usage: \n\
+        \r      conv [OPTIONS] number \n\
+        \r      conv [OPTIONS] number base \n\
+        \n\
+        \rOptions: \n\
+        \r      -h, --help      Display this message \n\
+    ";
+
+
     let mut p= parser::Parser::new();
 
     // Set command line options
-    p.add("-h", "--help", parser::ArgType::Bool(false));
+    p.add("-h", parser::ArgType::Bool(false));
 
     // Parse given command line options 
     match p.parse(env::args().collect()) {
         Err(e) => return println!("{}", e),
         _ => ()
     }
+
+    match p.is_set("-h") {
+        Ok(true) => return println!("{}", HELP_MSG),
+        Ok(false) => (),
+        Err(e) => return println!("{}", e)
+    }
+
 
     let params = match p.get_params() {
         Ok(val) => val,

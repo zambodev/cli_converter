@@ -30,20 +30,7 @@ impl fmt::Display for ArgError {
 #[derive(Debug)]
 pub struct Arg {
     is_set: bool,
-    shortf: String,
-    longf: String,
     value: ArgType 
-}
-
-impl Arg {
-    pub fn new(shortf: String, longf: String, value: ArgType) -> Arg {
-        Arg {
-            is_set: false,
-            shortf,
-            longf,
-            value
-        }
-    }
 }
 
 pub struct Parser {
@@ -67,8 +54,8 @@ impl Parser {
         }
     }
 
-    pub fn add(&mut self, shortf: &str, longf: &str, default_value: ArgType) {
-        self.arglist.insert(shortf.to_string(), Arg{ is_set: false, shortf: shortf.to_string(), longf: longf.to_string(), value: default_value });
+    pub fn add(&mut self, label: &str, default_value: ArgType) {
+        self.arglist.insert(label.to_string(), Arg{ is_set: false, value: default_value });
     }
 
     pub fn parse(&mut self, args: Vec<String>) -> Result<(), ArgError> {
@@ -90,7 +77,6 @@ impl Parser {
 
                             argref.is_set = true;
                             argref.value = ArgType::Str(args[i + 1].clone());
-                            println!("{:?}", argref);
 
                             i += 1;
                         },
@@ -101,14 +87,12 @@ impl Parser {
 
                             argref.is_set = true;
                             argref.value = ArgType::Int(args[i + 1].parse::<u128>().unwrap());
-                            println!("{:?}", argref);
 
                             i += 1;
                         },
                         ArgType::Bool(_) => {
                             argref.is_set = true;
                             argref.value = ArgType::Bool(true);
-                            println!("{:?}", argref);
                         }
                     }
                 },
