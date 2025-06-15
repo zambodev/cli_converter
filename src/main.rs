@@ -5,8 +5,20 @@ mod parser;
 
 fn main() {
     const HELP_MSG: &str = "Usage: \n\
-        \r      conv [OPTIONS] number \n\
-        \r      conv [OPTIONS] number base \n\
+        \r      conv [OPTIONS] [PREFIX]number \n\
+        \r      conv [OPTIONS] [PREFIX]number [BASE] \n\
+        \n\
+        \rPrefixes: \n\
+        \r      0x              16 base number\n\
+        \r                      10 base number (no prefix needed)\n\
+        \r      0               8 base number\n\
+        \r      0b              2 base number\n\
+        \n\
+        \rBases: \n\
+        \r      16              to 16 base\n\
+        \r      10              to 10 base\n\
+        \r      8               to 8 base\n\
+        \r      2               to 2 base\n\
         \n\
         \rOptions: \n\
         \r      -h, --help      Display this message \n\
@@ -59,10 +71,10 @@ fn main() {
 
     if params.len() == 2 {
         match params[1].as_str() {
-            "16" => println!("Hex: {:x}", number),
-            "10" => println!("Dec: {}", number),
-            "8" => println!("Oct: {:o}", number),
-            "2" => println!("Bin: {:b}", number),
+            "16" => println!("hex: {:x}", number),
+            "10" => println!("dec: {}", number),
+            "8" => println!("oct: {:o}", number),
+            "2" => println!("bin: {:b}", number),
             _ => return println!("{}", "wrong base parameter!".red())
         }
     } else {
