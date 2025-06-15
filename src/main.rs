@@ -1,4 +1,5 @@
 use std::{env, u128};
+use colored::Colorize;
 mod parser;
 
 
@@ -19,20 +20,22 @@ fn main() {
 
     // Parse given command line options 
     match p.parse(env::args().collect()) {
-        Err(e) => return println!("{}", e),
+        Err(e) => return println!("{}", e.to_string().red()),
         _ => ()
     }
 
     match p.is_set("-h") {
         Ok(true) => return println!("{}", HELP_MSG),
         Ok(false) => (),
-        Err(e) => return println!("{}", e)
+        Err(e) => return println!("{}", e.to_string().red())
     }
-
 
     let params = match p.get_params() {
         Ok(val) => val,
-        Err(e) => return println!("{}", e)
+        Err(e) => {
+            println!("{}", e.to_string().red());
+            return println!("{}", HELP_MSG);
+        }
     };
 
     let p = params[0].as_str();
@@ -51,7 +54,7 @@ fn main() {
 
     let number = match u128::from_str_radix(digits, base) {
         Ok(val) => val,
-        Err(e) => return println!("{}", e)
+        Err(e) => return println!("{}", e.to_string().red())
     };
 
     if params.len() == 2 {
@@ -60,13 +63,13 @@ fn main() {
             "10" => println!("Dec: {}", number),
             "8" => println!("Oct: {:o}", number),
             "2" => println!("Bin: {:b}", number),
-            _ => return println!("Wrong base parameter!")
+            _ => return println!("{}", "wrong base parameter!".red())
         }
     } else {
-        println!("Hex: {:x}", number);
-        println!("Dec: {}", number);
-        println!("Oct: {:o}", number);
-        println!("Bin: {:b}", number);
+        println!("hex: {:x}", number);
+        println!("dec: {}", number);
+        println!("oct: {:o}", number);
+        println!("bin: {:b}", number);
     }
 
 }

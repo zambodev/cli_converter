@@ -1,6 +1,6 @@
 use std::{collections::HashMap, u128, fmt};
 
-#[derive(Debug)]
+#[allow(dead_code)]
 pub enum ArgType {
     Str(String),
     Int(u128),
@@ -27,7 +27,6 @@ impl fmt::Display for ArgError {
     }
 }
 
-#[derive(Debug)]
 pub struct Arg {
     is_set: bool,
     value: ArgType 
@@ -66,13 +65,13 @@ impl Parser {
                 Some(label) => {
                     let argref= match self.arglist.get_mut(& label) {
                         Some(argument) => argument,
-                        None => return Err(ArgError{ error: "Unknown command line options!".to_string() })
+                        None => return Err(ArgError{ error: "unknown command line options!".to_string() })
                     };
 
                     match &argref.value {
                         ArgType::Str(_) => {
                             if (i + 1) >= args.len() {
-                                return Err(ArgError{ error: "Missing option value!".to_string() });
+                                return Err(ArgError{ error: "missing option value!".to_string() });
                             }
 
                             argref.is_set = true;
@@ -82,7 +81,7 @@ impl Parser {
                         },
                         ArgType::Int(_) => {
                             if (i + 1) >= args.len() {
-                                return Err(ArgError{ error: "Missing option value!".to_string() });
+                                return Err(ArgError{ error: "missing option value!".to_string() });
                             }
 
                             argref.is_set = true;
@@ -111,19 +110,20 @@ impl Parser {
     pub fn is_set(&mut self, label: &str) -> Result<bool, ArgError> {
         let nlabel = match Parser::label_normalize(label.to_string()) {
             Some(val) => val,
-            None => return Err(ArgError{ error: "Unknown command line options!".to_string() })
+            None => return Err(ArgError{ error: "unknown command line options!".to_string() })
         };
 
         match self.arglist.get_mut(& nlabel) {
             Some(arg) => return Ok(arg.is_set),
-            None => return Err(ArgError{ error: "Unknown command line options!".to_string() })
+            None => return Err(ArgError{ error: "unknown command line options!".to_string() })
         };
     }
 
+    #[allow(dead_code)]
     pub fn get_option_value(& self, label: String) -> Result<ArgType, ArgError> {
         let argref= match self.arglist.get(& label) {
             Some(argument) => argument,
-            None => return Err(ArgError{ error: "Unknown command line options!".to_string() })
+            None => return Err(ArgError{ error: "unknown command line options!".to_string() })
         };
 
         Ok(argref.value.clone())
@@ -133,7 +133,7 @@ impl Parser {
         if !self.paramlist.is_empty() {
             Ok(self.paramlist.clone())
         } else {
-            return Err(ArgError{ error: "Missing positional parameter!".to_string() })
+            return Err(ArgError{ error: "missing positional parameter!".to_string() })
         }
     }
 }
