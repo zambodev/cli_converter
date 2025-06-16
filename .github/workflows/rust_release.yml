@@ -23,3 +23,21 @@ jobs:
         path: '${{ github.workspace }}/target/release/conv'
         if-no-files-found: error
         retention-days: 1
+    - name: Download Executables
+      uses: actions/download-artifact@v4
+      with:
+        path: '${{ github.workspace }}/artifacts'
+    - name: Zip Executables
+      run: |
+        pushd "${{ github.workspace }}/artifacts"
+        for dir in ./*/; do
+          dir_name=$(basename "$dir");
+          zip_file="./$dir_name.zip";
+          zip -r "$zip_file" "$dir_name";
+        done
+        popd          
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      with:
+        body: New release!
+        files: ${{ github.workspace }}/artifacts/*.zip
