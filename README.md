@@ -4,9 +4,8 @@ Simple and easy to use commanbd line number converter
 NOTE: The original project was written in C, and due to learning purposes it's been rewritten in Rust
 
 ## How to install
-```bash
-# Coming soon...
-```
+Download latest version from [Releases](https://github.com/zambodev/cli_converter/releases)<br>
+Unzip and copy in your desired folder (make sure the folder is sourced into PATH)
 
 ## Help 
 ```bash
