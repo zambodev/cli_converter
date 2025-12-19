@@ -1,6 +1,9 @@
 ![GitHub](https://img.shields.io/github/license/Zambo-dev/cli_converter)
 
-# Number converter
+**NOTE**: This is the main branch, written in C, there is a "rust" branch that is **fully working**, and a just for fun "asm" branch that is only partially build
+This became my go to project while learning new languages, so new branches will be created in the future
+
+# cli_converter
 
 Command line interface number converter with many functionalities and cool features
 
