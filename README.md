@@ -1,4 +1,4 @@
-**NOTE**: This is the main branch, written in C, there is a "rust" branch that is **fully working**, and a just for fun "asm" branch that is only partially build
+**NOTE**: This is the main branch, written in C, there is a "rust" branch that is **fully working**, and a just for fun "asm" branch that is only partially build<br>
 This became my go to project while learning new languages, so new branches will be created in the future
 
 # cli_converter
